@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: qcb
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sys_db?useUnicode=true&useSSL=false&characterEncoding=utf8
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #filters: stat,wall,log4j
+    #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  #config-location和configuration只能声明一个
+#  config-location: classpath:mybatis/mybatis-config.xml
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  config-locations: /com/coderleague/module/*/mapper/xml/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.coderleague.module.*.entity
+  global-config:
+    #是否自动刷新 Mapper 对应的 XML 文件，默认不自动刷新。
+    refresh: true
+    db-config:
+      #逻辑已删除值
+      logic-delete-value: 1
+      logic-not-delete-value: 0
