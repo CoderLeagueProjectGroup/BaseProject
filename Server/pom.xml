@@ -23,6 +23,7 @@
     <mybatis-plus.version>3.0.5</mybatis-plus.version>
     <druid.version>1.1.10</druid.version>
     <common-codec.version>1.11</common-codec.version>
+    <common-lang3.version>3.8.1</common-lang3.version>
   </properties>
 
   <parent>
@@ -139,6 +140,12 @@
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>${common-codec.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${common-lang3.version}</version>
     </dependency>
 
   </dependencies>

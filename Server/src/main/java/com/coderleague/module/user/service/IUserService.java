@@ -16,8 +16,25 @@ public interface IUserService extends IService<User> {
 
     /**
      * 加密
-     * @param user
+     * @param password 密码
+     * @param salt 盐
      * @return
      */
-    String encrypt(User user);
+    String encrypt(String password, String salt);
+
+    /**
+     * 根据userId获取用户信息
+     * @param userId
+     * @return
+     */
+    User getUser(Integer userId);
+
+    /**
+     * 验证登陆
+     * @param userId
+     * @param token
+     * @param timestamp
+     * @return
+     */
+    boolean checkLogin(String userId,String token,String timestamp);
 }
