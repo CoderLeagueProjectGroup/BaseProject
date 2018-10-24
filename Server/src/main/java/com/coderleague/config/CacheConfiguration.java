@@ -1,5 +1,6 @@
 package com.coderleague.config;
 
+import com.coderleague.common.entity.Constant;
 import com.coderleague.config.cache.CacheItemConfig;
 import com.coderleague.config.cache.CustomizedRedisCacheManager;
 import com.google.common.collect.Lists;
@@ -20,9 +21,9 @@ public class CacheConfiguration {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory, RedisTemplate<Object, Object> redisTemplate) {
         CacheItemConfig productCacheItemConfig=new CacheItemConfig();
-        productCacheItemConfig.setName("UserCache");
-        productCacheItemConfig.setExpireTimeSecond(10);
-        productCacheItemConfig.setPreloadTimeSecond(5);
+        productCacheItemConfig.setName(Constant.USER_CACHE_NAME);
+        productCacheItemConfig.setExpireTimeSecond(60*30);
+        productCacheItemConfig.setPreloadTimeSecond(60*5);
         List<CacheItemConfig> cacheItemConfigs= Lists.newArrayList(productCacheItemConfig);
         CustomizedRedisCacheManager cacheManager = new CustomizedRedisCacheManager(connectionFactory,redisTemplate,cacheItemConfigs);
         return cacheManager;

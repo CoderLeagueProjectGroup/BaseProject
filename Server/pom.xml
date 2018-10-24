@@ -24,6 +24,7 @@
     <druid.version>1.1.10</druid.version>
     <common-codec.version>1.11</common-codec.version>
     <common-lang3.version>3.8.1</common-lang3.version>
+    <fastjson.version>1.2.51</fastjson.version>
   </properties>
 
   <parent>
@@ -146,6 +147,12 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>${common-lang3.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
     </dependency>
 
   </dependencies>

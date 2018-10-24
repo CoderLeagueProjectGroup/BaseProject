@@ -39,3 +39,7 @@ mybatis-plus:
       #逻辑已删除值
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+login:
+  #登陆过期时间
+  expire: 3600

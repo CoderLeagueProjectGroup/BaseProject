@@ -13,7 +13,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -55,7 +54,7 @@ public class AppTest
 
     @Test
     public void getUser(){
-        User user = userService.getUser(1);
+        User user = userService.getOne(new QueryWrapper<>(new User().setUsername("admin")));
         System.out.println(user);
     }
 

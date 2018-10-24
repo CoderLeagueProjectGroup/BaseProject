@@ -20,4 +20,14 @@ public class Constant {
      * timestamp的参数名常量
      */
     public static final String TIMESTAMP_PARAM="timestamp";
+
+    /**
+     * 用户缓存名称
+     */
+    public static final String USER_CACHE_NAME="UserCache";
+
+    /**
+     * 登陆缓存名称
+     */
+    public static final String LOGIN_CACHE_NAME="LoginCache";
 }

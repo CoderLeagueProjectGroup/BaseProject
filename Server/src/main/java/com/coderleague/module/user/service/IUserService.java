@@ -1,5 +1,6 @@
 package com.coderleague.module.user.service;
 
+import com.coderleague.common.entity.Result;
 import com.coderleague.module.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -36,5 +37,12 @@ public interface IUserService extends IService<User> {
      * @param timestamp
      * @return
      */
-    boolean checkLogin(String userId,String token,String timestamp);
+    Result checkLogin(int userId, String token, String timestamp);
+
+    /**
+     * 登陆
+     * @param user
+     * @return
+     */
+    Result<String> login(User user);
 }
