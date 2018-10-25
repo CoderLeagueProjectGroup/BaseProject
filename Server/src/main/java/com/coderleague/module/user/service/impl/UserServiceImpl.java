@@ -95,29 +95,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 登陆
+     *
      * @param user
      * @return
      */
     @Override
     public Result<String> login(User user) {
         Result result = new Result();
-        User u = getOne(new QueryWrapper<User>().eq("username",user.getUsername()));
-        if(u==null){
+        User u = getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
+        if (u == null) {
             result.setCode(401);
             result.setMsg("用户名或密码错误");
             return result;
         }
 
-        String encryptedPassword = encrypt(user.getPassword(),u.getSalt());
-        if(!u.getPassword().equals(encryptedPassword)){
+        String encryptedPassword = encrypt(user.getPassword(), u.getSalt());
+        if (!u.getPassword().equals(encryptedPassword)) {
             result.setCode(401);
             result.setMsg("用户名或密码错误");
             return result;
         }
         //验证通过，发放token
         result.setCode(200);
-        String token= UUID.randomUUID().toString().replace("-","");
-        redisTemplate.opsForValue().set(Constant.LOGIN_CACHE_NAME+":"+user.getId(),token,loginExpireSeconds);
+        String token = UUID.randomUUID().toString().replace("-", "");
+        redisTemplate.opsForValue().set(Constant.LOGIN_CACHE_NAME + ":" + user.getId(), token, loginExpireSeconds);
         result.setData(token);
         return result;
     }

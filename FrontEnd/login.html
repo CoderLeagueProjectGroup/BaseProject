@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/login/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/login/reset.css" />
+    <style>
+        .login-center-input.error input:focus {
+            border: 1px solid #FF5722;
+        }
+
+        .login-center-input.error input:focus~.login-center-input-text {
+            color: #FF5722;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-js">
+        <div class="login">
+            <div class="login-top">
+                登录
+            </div>
+            <div class="login-center clearfix">
+                <div class="login-center-img">
+                    <img src="images/login/name.png">
+                </div>
+                <div class="login-center-input">
+                    <input type="text" name="" id="username" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的用户名'">
+                    <div class="login-center-input-text">用户名</div>
+                </div>
+            </div>
+            <div class="login-center clearfix">
+                <div class="login-center-img">
+                    <img src="images/login/password.png">
+                </div>
+                <div class="login-center-input">
+                    <input type="password" name="" id="password" value="" placeholder="请输入您的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'">
+                    <div class="login-center-input-text">密码</div>
+                </div>
+            </div>
+            <div class="login-button">
+                登陆
+            </div>
+        </div>
+        <div class="sk-rotating-plane"></div>
+        <canvas class="particles-js-canvas-el" width="906" height="740" style="width: 100%; height: 100%;"></canvas>
+    </div>
+    <script src="js/login/particles.min.js"></script>
+    <script src="js/login/app.js"></script>
+    <script src="js/lib/jquery-1.8.0.min.js"></script>
+    <script src="layui/layui.all.js"></script>
+    <script src="js/lib/axios.min.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript">
+        function hasClass(elem, cls) {
+            cls = cls || '';
+            if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
+            return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+        }
+
+        function addClass(ele, cls) {
+            if (!hasClass(ele, cls)) {
+                ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+            }
+        }
+
+        function removeClass(ele, cls) {
+            if (hasClass(ele, cls)) {
+                var newClass = ' ' + ele.className.replace(/[\t\r\n]/g, '') + ' ';
+                while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+                    newClass = newClass.replace(' ' + cls + ' ', ' ');
+                }
+                ele.className = newClass.replace(/^\s+|\s+$/g, '');
+            }
+        }
+
+        document.querySelector(".login-button").onclick = function () {
+            //登陆验证
+            var usernameDom = document.getElementById("username");
+            var passwordDom = document.getElementById("password");
+            if (usernameDom.value.trim() == "") {
+                usernameDom.focus();
+                addClass(usernameDom.parentNode, "error");
+                return;
+            }
+            if (passwordDom.value.trim() == "") {
+                passwordDom.focus();
+                addClass(passwordDom.parentNode, "error");
+                return;
+            }
+
+            this.disabled=true;
+            //登陆请求
+            var baseAxios = axios.create({
+                baseURL: constant.host
+            });
+            baseAxios.post("/user/user/login",{
+                username:usernameDom.value,
+                password:passwordDom.value
+            }).then(function(response){
+                // console.log(response);
+                if(response.data.code==401){
+                    layer.msg(response.data.msg,{icon: 5, anim: 6});
+                }else{
+                    alert('登陆成功');
+                }
+                this.disabled=false;
+            }).catch(function(error){
+                layer.msg("网络断开连接",{icon: 5, anim: 6});
+                console.log(error);
+                this.disabled=false;
+            });
+            // addClass(document.querySelector(".login"), "active")
+            // setTimeout(function () {
+            //     addClass(document.querySelector(".sk-rotating-plane"), "active")
+            //     document.querySelector(".login").style.display = "none"
+            // }, 800)
+            // setTimeout(function () {
+            //     removeClass(document.querySelector(".login"), "active")
+            //     removeClass(document.querySelector(".sk-rotating-plane"), "active")
+            //     document.querySelector(".login").style.display = "block"
+            //     alert("登录成功")
+
+            // }, 5000)
+        }
+
+        document.querySelectorAll('.login-center-input input').forEach(function (d) {
+            d.onblur = function () {
+                removeClass(d.parentNode, "error");
+                if (this.id == "username") {
+                    this.placeholder = "请输入您的用户名";
+                } else {
+                    this.placeholder = "请输入您的密码";
+                }
+            }
+        })
+
+    
+    </script>
+</body>
+
+</html>

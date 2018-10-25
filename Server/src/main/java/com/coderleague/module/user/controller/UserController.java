@@ -4,15 +4,15 @@ package com.coderleague.module.user.controller;
 import com.coderleague.common.entity.Result;
 import com.coderleague.common.exception.ParamException;
 import com.coderleague.module.user.entity.User;
+import com.coderleague.module.user.service.IUserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,15 +28,16 @@ import javax.validation.Valid;
 @RequestMapping("/user/user")
 public class UserController {
 
+    @Autowired
+    private IUserService userService;
 
-    @ApiOperation(value="一个测试API",notes = "第一个测试api")
-    @GetMapping("/test")
-    public User test(){
-        throw new ParamException("test");
-    }
-
+    @ApiOperation(value="登陆接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username",value = "用户名",required = true),
+            @ApiImplicitParam(name = "password",value = "密码",required = true)
+    })
     @PostMapping("/login")
-    public Result login(@Valid User user, BindingResult bindingResult){
+    public Result login(@RequestBody @Valid User user, BindingResult bindingResult){
         Result result = new Result();
         if(bindingResult.hasErrors()){
             for(FieldError fieldError:bindingResult.getFieldErrors()){
@@ -45,6 +46,7 @@ public class UserController {
                 return result;
             }
         }
+        result=userService.login(user);
         return result;
     }
 }
