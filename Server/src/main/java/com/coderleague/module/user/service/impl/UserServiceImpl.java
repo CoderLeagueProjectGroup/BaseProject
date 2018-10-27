@@ -17,7 +17,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -118,8 +121,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //验证通过，发放token
         result.setCode(200);
         String token = UUID.randomUUID().toString().replace("-", "");
-        redisTemplate.opsForValue().set(Constant.LOGIN_CACHE_NAME + ":" + user.getId(), token, loginExpireSeconds);
-        result.setData(token);
+        redisTemplate.opsForValue().set(Constant.LOGIN_CACHE_NAME + ":" + u.getId(), token, loginExpireSeconds, TimeUnit.SECONDS);
+        Map<String,Object> data=new HashMap<>(2);
+        data.put("id",u.getId());
+        data.put("token",token);
+        result.setData(data);
         return result;
+    }
+
+    public static void main(String[] args) {
+        long mills =System.currentTimeMillis();
+        System.out.println(mills);
+        System.out.println(DigestUtils.md5Hex("be3317b8b07347e9b013c02ac2c3d328"+mills));
     }
 }

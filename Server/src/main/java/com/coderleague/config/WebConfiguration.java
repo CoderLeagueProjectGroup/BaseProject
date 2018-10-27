@@ -7,9 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * Created by DELL on 2018/10/24.
@@ -18,9 +20,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Slf4j
 public class WebConfiguration extends WebMvcConfigurationSupport {
 
+    @Bean
+    public HandlerInterceptor userLoginInterceptor(){
+        return new UserLoginInterceptor();
+    }
+
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserLoginInterceptor())
+        registry.addInterceptor(userLoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/user/login","/**/*.css","/error","/swagger-ui.html","/**/*.html","/**/*.js","/**/*.png","/**/*.jpg","/druid/**","/actuator/**","/swagger-resources/**");
     }

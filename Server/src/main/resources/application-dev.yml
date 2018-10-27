@@ -29,7 +29,7 @@ mybatis-plus:
 #  config-location: classpath:mybatis/mybatis-config.xml
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
-  config-locations: /com/coderleague/module/*/mapper/xml/*Mapper.xml
+  mapper-locations: classpath:/com/coderleague/module/*/mapper/xml/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.coderleague.module.*.entity
   global-config:

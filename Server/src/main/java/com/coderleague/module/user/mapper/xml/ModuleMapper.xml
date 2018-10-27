@@ -7,6 +7,8 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="parent_id" property="parentId" />
+        <result column="menu_flag" property="menuFlag"/>
+        <result column="action_url" property="actionUrl"/>
         <result column="order_num" property="orderNum" />
         <result column="create_time" property="createTime" />
         <result column="create_id" property="createId" />
@@ -17,7 +19,38 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, parent_id, order_num, create_time, create_id, modify_time, modify_id, delete_flag
+        id, name, parent_id, order_num, create_time, create_id, modify_time, modify_id, delete_flag, menu_flag, action_url
     </sql>
+
+    <!--根据角色id获取功能集合-->
+    <select id="getListByRoleId" resultMap="BaseResultMap">
+        SELECT
+          m.id,
+          `name`,
+          parent_id,
+          menu_flag,
+          action_url,
+          order_num,
+          create_time,
+          create_id,
+          modify_time,
+          modify_id,
+          delete_flag
+        FROM
+          `module` m
+        INNER JOIN role_module rm
+        ON m.id=rm.module_id
+        WHERE
+        m.delete_flag=0
+        AND rm.role_id=#{roleId}
+        <choose>
+            <when test="isMenu!=null and isMenu==true">
+                and m.menu_flag=1
+            </when>
+            <when test="isMenu!=null and isMenu==false">
+                m.menu_flag=0
+            </when>
+        </choose>
+    </select>
 
 </mapper>

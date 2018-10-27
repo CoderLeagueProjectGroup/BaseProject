@@ -35,6 +35,18 @@ public class Module implements Serializable {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty(value = "图标")
+    @TableField("icon")
+    private String icon;
+
+    @ApiModelProperty(value = "是否菜单项，0否，1是")
+    @TableField("menu_flag")
+    private Integer menuFlag;
+
+    @ApiModelProperty(value = "操作url")
+    @TableField("action_url")
+    private String actionUrl;
+
     @ApiModelProperty(value = "父 模块id，没有的话为0")
     @TableField("parent_id")
     private Integer parentId;

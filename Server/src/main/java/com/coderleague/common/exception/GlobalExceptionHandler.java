@@ -1,6 +1,7 @@
 package com.coderleague.common.exception;
 
 import com.coderleague.common.entity.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -16,12 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  * 全局异常处理
  * Created by DELL on 2018/10/22.
  */
+@Slf4j
 @Component
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @Nullable Object o, Exception e) {
-        ModelAndView mv=new ModelAndView(new MappingJackson2JsonView());
+        log.error(e.getMessage(),e);
+          ModelAndView mv=new ModelAndView(new MappingJackson2JsonView());
         Result result;
         if(e instanceof ParamException){
             mv.setStatus(HttpStatus.BAD_REQUEST);
