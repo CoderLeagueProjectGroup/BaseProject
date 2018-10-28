@@ -49,4 +49,10 @@ public class UserController {
         result=userService.login(user);
         return result;
     }
+
+    @ApiOperation(value="获取用户名")
+    @GetMapping("/username")
+    public Result getUsername(){
+        return userService.getUsername();
+    }
 }

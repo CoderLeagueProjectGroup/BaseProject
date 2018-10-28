@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coderleague.common.entity.Constant;
 import com.coderleague.common.entity.Result;
+import com.coderleague.common.util.LoginUtil;
 import com.coderleague.module.user.entity.User;
 import com.coderleague.module.user.mapper.UserMapper;
 import com.coderleague.module.user.service.IUserService;
@@ -127,6 +128,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         data.put("token",token);
         result.setData(data);
         return result;
+    }
+
+    /**
+     * 获取用户名
+     * @return
+     */
+    @Override
+    public Result<String> getUsername() {
+        return new Result<>(200,null, LoginUtil.getUser().getUsername());
     }
 
     public static void main(String[] args) {

@@ -45,4 +45,10 @@ public interface IUserService extends IService<User> {
      * @return
      */
     Result<String> login(User user);
+
+    /**
+     * 获取用户名
+     * @return
+     */
+    Result<String> getUsername();
 }
