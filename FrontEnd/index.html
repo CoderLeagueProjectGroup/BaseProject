@@ -19,7 +19,7 @@
                 <li class="layui-nav-item" lay-unselect="">
                    
                     <a href="javascript:;">
-                        <cite>贤心</cite>
+                        <cite id="username">贤心</cite>
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child layui-anim layui-anim-upbit">
@@ -88,11 +88,19 @@
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
 
     </div>
+    <script src="js/lib/jquery-3.3.1.min.js"></script>
     <script src="layui/layui.all.js"></script>
+    <script src="js/lib/md5.min.js"></script>
+    <script src="js/lib/axios.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/index/app.js"></script>
     <script>
         layui.use('element', function () {
             var element = layui.element;
-            
+
+            app.getUsername(function (username) {
+                $("#username").text(username);
+            })
         });
     </script>
 </body>

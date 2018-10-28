@@ -4,12 +4,35 @@ var constant = {
     token: "token"
 };
 
-var app={
+var util={
     //获取axios对象
     getAxios: function () {
-        return axios.create({
+        var instance = axios.create({
             baseURL: constant.host
         });
+        instance.defaults.headers.common['Authorization'] = this.getAuthorizationHeader();
+        // 添加响应拦截器
+        instance.interceptors.response.use(function (response) {
+            return response;
+        }, function (error) {
+            // 对响应错误做点什么
+            console.log("interceptor:"+error);
+            console.log(error.response.status);
+            if(error.response.status==401){
+                top.location.href="login.html";
+            }else{
+                layer.msg(response.data.data.msg||"网络错误！");
+            }
+            return Promise.reject(error);
+        });
+        return instance;
+    },
+    //
+    getAuthorizationHeader:function () {
+        var userId=localStorage.getItem(constant.userId)||'';
+        var timestamp=new Date().getTime();
+        var token=md5.hex((localStorage.getItem(constant.token)||'')+timestamp);
+        return "userId="+userId+"&token="+token+"&timestamp="+timestamp;
     }
 };
 
