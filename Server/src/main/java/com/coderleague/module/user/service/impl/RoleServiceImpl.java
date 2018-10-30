@@ -86,6 +86,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
             return;
         }
         List<Module> moduleList =menuMap.get(menuItem.getId());
+        if(CollectionUtils.isEmpty(moduleList))
+            return;
         //按照排序序号和修改日期排序
         moduleList.sort(new ModuleComparator());
         List<MenuItem> children = moduleList.stream()

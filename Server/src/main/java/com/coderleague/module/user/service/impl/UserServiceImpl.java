@@ -71,10 +71,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result checkLogin(int userId, String token, String timestamp) {
         Result result = new Result();
-        result.setCode(200);
+        result.setCode(Constant.SUCCESS_CODE);
         String loginToken = (String) redisTemplate.opsForValue().get(Constant.LOGIN_CACHE_NAME + ":" + userId);
         if (StringUtils.isBlank(loginToken)) {
-            result.setCode(401);
+            result.setCode(Constant.NO_AUTH_CODE);
             result.setMsg("登陆验证失败");
             return result;
         }
@@ -83,14 +83,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         long mills = Long.valueOf(timestamp);
         //如果时间戳与当前时间误差大于5分钟
         if (Math.abs(now - mills) > 60 * 1000 * 5) {
-            result.setCode(401);
+            result.setCode(Constant.NO_AUTH_CODE);
             result.setMsg("时间戳过期");
             return result;
         }
 
         //校验token
         if (!token.equals(DigestUtils.md5Hex(loginToken + timestamp))) {
-            result.setCode(401);
+            result.setCode(Constant.NO_AUTH_CODE);
             result.setMsg("登陆验证失败");
             return result;
         }
@@ -108,19 +108,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Result result = new Result();
         User u = getOne(new QueryWrapper<User>().eq("username", user.getUsername()));
         if (u == null) {
-            result.setCode(401);
+            result.setCode(Constant.NO_AUTH_CODE);
             result.setMsg("用户名或密码错误");
             return result;
         }
 
         String encryptedPassword = encrypt(user.getPassword(), u.getSalt());
         if (!u.getPassword().equals(encryptedPassword)) {
-            result.setCode(401);
+            result.setCode(Constant.NO_AUTH_CODE);
             result.setMsg("用户名或密码错误");
             return result;
         }
         //验证通过，发放token
-        result.setCode(200);
+        result.setCode(Constant.SUCCESS_CODE);
         String token = UUID.randomUUID().toString().replace("-", "");
         redisTemplate.opsForValue().set(Constant.LOGIN_CACHE_NAME + ":" + u.getId(), token, loginExpireSeconds, TimeUnit.SECONDS);
         Map<String,Object> data=new HashMap<>(2);
@@ -136,7 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public Result<String> getUsername() {
-        return new Result<>(200,null, LoginUtil.getUser().getUsername());
+        return new Result<>(Constant.SUCCESS_CODE,null, LoginUtil.getUser().getUsername());
     }
 
     public static void main(String[] args) {

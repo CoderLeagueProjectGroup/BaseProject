@@ -35,4 +35,10 @@ public class Constant {
      * 菜单缓存名称
      */
     public static final String MENU_CACHE = "MenuCache";
+
+
+    public static final int SUCCESS_CODE=200;
+
+
+    public static final int NO_AUTH_CODE=401;
 }

@@ -21,7 +21,7 @@ import java.util.*;
  * Created by DELL on 2018/10/23.
  */
 @Aspect
-@Component
+//@Component
 public class CachingAnnotationAspect {
 
     @Autowired

@@ -38,7 +38,7 @@ public class CustomizedRedisCacheManager extends RedisCacheManager {
             RedisOperations redisOperations,
             List<CacheItemConfig> cacheItemConfigList){
         this(RedisCacheWriter.lockingRedisCacheWriter(connectionFactory),
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(30)),
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(60*30)),
                 cacheItemConfigList.stream().collect(Collectors.toMap(CacheItemConfig::getName,cacheItemConfig -> {
                     return RedisCacheConfiguration.defaultCacheConfig()
                             .entryTtl(Duration.ofSeconds(cacheItemConfig.getExpireTimeSecond()))

@@ -36,14 +36,14 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
         if (StringUtils.isEmpty(map.get(Constant.USER_ID_PARAM))
                 || StringUtils.isEmpty(map.get(Constant.TOKEN_PARAM))
                 || StringUtils.isEmpty(map.get(Constant.TIMESTAMP_PARAM))) {
-            result=new Result(401,"登陆验证失败",null);
+            result=new Result(Constant.NO_AUTH_CODE,"登陆验证失败",null);
             writeResult(response,result);
             return false;
         }
 
         result = userService.checkLogin(Integer.valueOf(map.get(Constant.USER_ID_PARAM)),
                 map.get(Constant.TOKEN_PARAM), map.get(Constant.TIMESTAMP_PARAM));
-        if (result.getCode() == 401) {
+        if (result.getCode() == Constant.NO_AUTH_CODE) {
             writeResult(response,result);
             return false;
         }
