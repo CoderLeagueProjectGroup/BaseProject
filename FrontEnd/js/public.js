@@ -21,7 +21,7 @@ var util={
             if(error.response.status==401){
                 top.location.href="login.html";
             }else{
-                layer.msg(response.data.data.msg||"网络错误！");
+                layer.msg(error.response.data.msg||"网络错误！");
             }
             return Promise.reject(error);
         });

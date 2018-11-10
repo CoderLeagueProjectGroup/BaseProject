@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,97 +12,132 @@
 </head>
 
 <body class="layadmin-tabspage-none">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <!-- 头部区域 -->
-            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-                <li class="layui-nav-item" lay-unselect="">
-                   
-                    <a href="javascript:;">
-                        <cite id="username">贤心</cite>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <!-- 头部区域 -->
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+            <li class="layui-nav-item" lay-unselect="">
+
+                <a href="javascript:;">
+                    <cite id="username">贤心</cite>
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                    <dd>
+                        <a lay-href="set/user/info">基本资料</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="set/user/password">修改密码</a>
+                    </dd>
+                    <hr>
+                    <dd layadmin-event="logout" style="text-align: center;">
+                        <a>退出</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                <a href="javascript:;" layadmin-event="about">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+            <span class="layui-nav-bar" style="left: 0px; top: 48px; width: 0px; opacity: 0;"></span>
+        </ul>
+    </div>
+
+    <!-- 侧边菜单 -->
+    <div class="layui-side layui-side-menu">
+        <div class="layui-side-scroll">
+
+            <div class="layui-logo" lay-href="">
+                <span></span>
+            </div>
+            <script id="systemSideMenu" type="text/html">
+                {{# layui.each(d, function(index, item){ }}
+                <li data-name="" data-jump="" class="layui-nav-item">
+                    <a href="javascript:;" lay-tips="{{ item.name }}" lay-direction="2">
+                        {{# if(item.icon){ }}
+                        <i class="layui-icon {{ item.icon }}"></i>
+                        {{# } }}
+                        <cite>{{ item.name }}</cite>
+                        {{# if(item.children.length>0){ }}
+                        <span class="layui-nav-more"></span>
+                        {{# } }}
+                    </a>
+                    {{# if(item.children.length>0){ }}
+                    <dl class="layui-nav-child">
+                        {{# layui.each(item.children, function(idx, it){ }}
+                        <dd data-name="" data-jump="{{ it.url||'' }}" class="layui-this">
+                            <a href="javascript:;" lay-href="{{ it.url||'' }}">{{ it.name }}</a>
+                        </dd>
+                        {{# }); }}
+                    </dl>
+                    {{# } }}
+                </li>
+                {{# }); }}
+            </script>
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                lay-filter="layadmin-system-side-menu">
+                <!--<li data-name="" data-jump="" class="layui-nav-item">
+                    <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                        <i class="layui-icon layui-icon-home"></i>
+                        <cite>主页</cite>
                         <span class="layui-nav-more"></span>
                     </a>
-                    <dl class="layui-nav-child layui-anim layui-anim-upbit">
-                        <dd>
-                            <a lay-href="set/user/info">基本资料</a>
+                    <dl class="layui-nav-child">
+                        <dd data-name="" data-jump="/" class="layui-this">
+                            <a href="javascript:;" lay-href="/">控制台</a>
                         </dd>
-                        <dd>
-                            <a lay-href="set/user/password">修改密码</a>
+                        <dd data-name="homepage1" data-jump="home/homepage1">
+                            <a href="javascript:;" lay-href="home/homepage1">主页一</a>
                         </dd>
-                        <hr>
-                        <dd layadmin-event="logout" style="text-align: center;">
-                            <a>退出</a>
+                        <dd data-name="homepage2" data-jump="home/homepage2">
+                            <a href="javascript:;" lay-href="home/homepage2">主页二</a>
                         </dd>
                     </dl>
-                </li>
+                </li>-->
 
-                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
-                    <a href="javascript:;" layadmin-event="about">
-                        <i class="layui-icon layui-icon-more-vertical"></i>
-                    </a>
-                </li>
-                <span class="layui-nav-bar" style="left: 0px; top: 48px; width: 0px; opacity: 0;"></span>
+                <span class="layui-nav-bar" style="top: 84px; height: 0px; opacity: 0;"></span>
             </ul>
         </div>
-
-        <!-- 侧边菜单 -->
-        <div class="layui-side layui-side-menu">
-            <div class="layui-side-scroll">
-                
-                <div class="layui-logo" lay-href="">
-                    <span></span>
-                </div>
-                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-                    <li data-name="" data-jump="" class="layui-nav-item">
-                        <a href="javascript:;" lay-tips="主页" lay-direction="2">
-                            <i class="layui-icon layui-icon-home"></i>
-                            <cite>主页</cite>
-                            <span class="layui-nav-more"></span>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd data-name="" data-jump="/" class="layui-this">
-                                <a href="javascript:;" lay-href="/">控制台</a>
-                            </dd>
-                            <dd data-name="homepage1" data-jump="home/homepage1">
-                                <a href="javascript:;" lay-href="home/homepage1">主页一</a>
-                            </dd>
-                            <dd data-name="homepage2" data-jump="home/homepage2">
-                                <a href="javascript:;" lay-href="home/homepage2">主页二</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    
-                    <span class="layui-nav-bar" style="top: 84px; height: 0px; opacity: 0;"></span>
-                </ul>
-            </div>
-        </div>
-
-        <!-- 主体内容 -->
-        <div class="layui-body" id="LAY_app_body">
-            <div class="layadmin-tabsbody-item layui-show" style="overflow-y: hidden;">
-                <iframe name="" style="height: 100%;width: 100%;overflow: hidden;border: none;"></iframe>
-            </div>
-        </div>
-
-        <!-- 辅助元素，一般用于移动设备下遮罩 -->
-        <div class="layadmin-body-shade" layadmin-event="shade"></div>
-
     </div>
-    <script src="js/lib/jquery-3.3.1.min.js"></script>
-    <script src="layui/layui.all.js"></script>
-    <script src="js/lib/md5.min.js"></script>
-    <script src="js/lib/axios.js"></script>
-    <script src="js/public.js"></script>
-    <script src="js/index/app.js"></script>
-    <script>
-        layui.use('element', function () {
-            var element = layui.element;
 
-            app.getUsername(function (username) {
-                $("#username").text(username);
-            })
+    <!-- 主体内容 -->
+    <div class="layui-body" id="LAY_app_body">
+        <!--<div class="layadmin-tabsbody-item layui-show" style="overflow-y: hidden;">-->
+        <!--<iframe name="" style="height: 100%;width: 100%;overflow: hidden;border: none;"></iframe>-->
+        <!--</div>-->
+    </div>
+
+    <!-- 辅助元素，一般用于移动设备下遮罩 -->
+    <div class="layadmin-body-shade" layadmin-event="shade"></div>
+
+</div>
+<script src="js/lib/jquery-3.3.1.min.js"></script>
+<script src="layui/layui.all.js"></script>
+<script src="js/lib/md5.min.js"></script>
+<script src="js/lib/axios.js"></script>
+<script src="js/public.js"></script>
+<script src="js/index/app.js"></script>
+<script>
+    layui.use(['element', 'laytpl'], function () {
+        var element = layui.element;
+        var laytpl = layui.laytpl;
+
+        //加载账号名
+        app.getUsername(function (username) {
+            $("#username").text(username);
+        })
+        //加载菜单
+        var menuTpl = document.getElementById("systemSideMenu").innerHTML;
+        var menuView = document.getElementById("LAY-system-side-menu");
+        app.getMenu(function (menuList) {
+            laytpl(menuTpl).render(menuList, function (html) {
+                menuView.innerHTML = html;
+            });
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>

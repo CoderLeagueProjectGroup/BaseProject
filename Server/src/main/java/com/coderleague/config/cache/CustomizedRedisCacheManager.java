@@ -1,6 +1,5 @@
 package com.coderleague.config.cache;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.Cache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;

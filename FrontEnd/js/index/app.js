@@ -10,5 +10,13 @@ var app={
                 // console.log(error);
                 // layer&&layer.msg("网络错误！");
             });
+    },
+    //获取菜单
+    getMenu:function (fn) {
+        var axs=util.getAxios();
+        axs.get("/user/role/menu")
+            .then(function (response) {
+                fn&&fn(response.data.data);
+            });
     }
 };
